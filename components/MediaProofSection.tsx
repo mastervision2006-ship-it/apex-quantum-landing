@@ -24,30 +24,36 @@ export default function MediaProofSection() {
     restDelta: 0.0005,
   })
 
-  // Card 1 — recedes slowly
-  const c1Scale = useTransform(smooth, [0, 0.6], [1, 0.92])
-  const c1Y     = useTransform(smooth, [0, 0.6], ['0%', '-2%'])
-  const c1Dim   = useTransform(smooth, [0.3, 0.62], [1, 0.55])
+  // ── Zonas de dwell (300vh total):
+  //  Card 1: visível de 0% → 22% (66vh leitura), some ao longo de 22–42%
+  //  Card 2: entra 10%→40%, DWELL 40%→62% (66vh leitura), some ao longo de 62–80%
+  //  Card 3: entra 62%→95%, dwell até o fim
 
-  // Card 2 — gentle rise 10% → 55%
-  const c2Y     = useTransform(smooth, [0.1, 0.55], ['90%', '0%'])
-  const c2Scale = useTransform(smooth, [0.1, 0.55, 0.78], [0.97, 1, 0.92])
+  // Card 1 — recede enquanto card 2 sobe
+  const c1Scale = useTransform(smooth, [0, 0.65], [1, 0.92])
+  const c1Y     = useTransform(smooth, [0, 0.65], ['0%', '-2%'])
+  const c1Dim   = useTransform(smooth, [0.22, 0.42], [1, 0.5])
 
-  // Card 3 — gentle rise 50% → 95%
-  const c3Y     = useTransform(smooth, [0.5, 0.95], ['90%', '0%'])
-  const c3Scale = useTransform(smooth, [0.5, 0.95], [0.97, 1])
+  // Card 2 — entra rápido, dwell longo, recede suave
+  const c2Y     = useTransform(smooth, [0.10, 0.40], ['92%', '0%'])
+  const c2Scale = useTransform(smooth, [0.10, 0.40, 0.80], [0.97, 1, 0.92])
+  const c2Dim   = useTransform(smooth, [0.62, 0.80], [1, 0.5])
+
+  // Card 3 — só entra depois que card 2 ficou visível por um bom tempo
+  const c3Y     = useTransform(smooth, [0.62, 0.95], ['92%', '0%'])
+  const c3Scale = useTransform(smooth, [0.62, 0.95], [0.97, 1])
 
   // Header fades out when stack starts
-  const headerOp = useTransform(smooth, [0, 0.1], [1, 0])
-  const headerY  = useTransform(smooth, [0, 0.1], [0, -16])
+  const headerOp = useTransform(smooth, [0, 0.08], [1, 0])
+  const headerY  = useTransform(smooth, [0, 0.08], [0, -16])
 
-  // Dot opacities
-  const dot2Op = useTransform(smooth, [0.1, 0.45], [0.25, 1])
-  const dot3Op = useTransform(smooth, [0.5, 0.85], [0.25, 1])
+  // Dot opacities sincronizados com dwell zones
+  const dot2Op = useTransform(smooth, [0.10, 0.40], [0.25, 1])
+  const dot3Op = useTransform(smooth, [0.62, 0.90], [0.25, 1])
 
   return (
     <section style={{ background: 'var(--bg-section)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-      <div ref={sectionRef} style={{ height: '220vh' }} className="relative">
+      <div ref={sectionRef} style={{ height: '300vh' }} className="relative">
 
         {/* Sticky viewport */}
         <div className="sticky top-0 overflow-hidden" style={{ height: '100svh' }}>
@@ -85,12 +91,12 @@ export default function MediaProofSection() {
             */}
             <div
               className="relative w-full"
-              style={{ aspectRatio: '16 / 9.5', maxHeight: '440px' }}
+              style={{ aspectRatio: '16 / 11', maxHeight: '500px' }}
             >
               <motion.div style={{ y: c1Y, scale: c1Scale, opacity: c1Dim, zIndex: 1 }} className="absolute inset-0">
                 <CardUI card={cards[0]} priority />
               </motion.div>
-              <motion.div style={{ y: c2Y, scale: c2Scale, zIndex: 2 }} className="absolute inset-0">
+              <motion.div style={{ y: c2Y, scale: c2Scale, opacity: c2Dim, zIndex: 2 }} className="absolute inset-0">
                 <CardUI card={cards[1]} />
               </motion.div>
               <motion.div style={{ y: c3Y, scale: c3Scale, zIndex: 3 }} className="absolute inset-0">
@@ -147,7 +153,7 @@ function CardUI({ card, priority = false }: { card: (typeof cards)[0]; priority?
           src={card.image}
           alt={card.alt}
           fill
-          className="object-cover object-top"
+          className="object-contain"
           sizes="(max-width: 640px) calc(100vw - 32px), 640px"
           priority={priority}
         />
