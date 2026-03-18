@@ -126,38 +126,20 @@ export default function MediaProofSection() {
 function CardUI({ card, priority = false }: { card: (typeof cards)[0]; priority?: boolean }) {
   return (
     <div
-      className="w-full h-full overflow-hidden"
+      className="relative w-full h-full overflow-hidden"
       style={{
-        borderRadius: '10px',
-        boxShadow: '0 28px 70px rgba(0,0,0,0.55), 0 6px 20px rgba(0,0,0,0.3)',
-        border: '1px solid rgba(255,255,255,0.07)',
-        background: 'var(--bg-card)',
+        borderRadius: '8px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.45), 0 4px 16px rgba(0,0,0,0.2)',
       }}
     >
-      {/* Outlet badge */}
-      <div
-        className="px-4 py-2.5 flex items-center justify-between flex-shrink-0"
-        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        <span className="font-sans font-semibold uppercase tracking-widest" style={{ fontSize: '0.62rem', color: 'var(--gold)' }}>
-          {card.outlet}
-        </span>
-        <span className="font-sans uppercase tracking-wider" style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.25)' }}>
-          Cobertura Apex Quantum
-        </span>
-      </div>
-
-      {/* Image fills remaining height */}
-      <div className="relative w-full" style={{ height: 'calc(100% - 42px)' }}>
-        <Image
-          src={card.image}
-          alt={card.alt}
-          fill
-          className="object-contain"
-          sizes="(max-width: 640px) calc(100vw - 32px), 640px"
-          priority={priority}
-        />
-      </div>
+      <Image
+        src={card.image}
+        alt={card.alt}
+        fill
+        className="object-contain"
+        sizes="(max-width: 640px) calc(100vw - 32px), 640px"
+        priority={priority}
+      />
     </div>
   )
 }
