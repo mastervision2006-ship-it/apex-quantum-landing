@@ -66,9 +66,9 @@ export default function TestimonialsSection() {
           <p className="font-cormorant text-2xl italic mb-6" style={{ color: 'var(--text-soft)' }}>
             &ldquo;O próximo resultado pode ser o seu.&rdquo;
           </p>
-          <a href="#form" className="btn-pill">
-            Quero os mesmos resultados
-            <span className="arrow">→</span>
+          <a href="#form" className="btn-beam">
+            <span className="btn-beam-text">Quero os mesmos resultados</span>
+            <span className="btn-beam-arrow">→</span>
           </a>
         </motion.div>
       </div>

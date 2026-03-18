@@ -28,9 +28,9 @@ export default function Navigation() {
           APEX <span style={{ color: '#C49A38' }}>QUANTUM</span>
         </span>
 
-        <a href="#form" className="btn-pill hidden sm:inline-flex" style={{ fontSize: '0.72rem', padding: '0.6rem 1.2rem 0.6rem 1.4rem' }}>
-          Habilitar Conta
-          <span className="arrow" style={{ width: '22px', height: '22px', fontSize: '0.72rem' }}>→</span>
+        <a href="#form" className="btn-beam hidden sm:inline-flex" style={{ padding: '3px 3px 3px 1.1rem' }}>
+          <span className="btn-beam-text" style={{ fontSize: '0.72rem' }}>Habilitar Conta</span>
+          <span className="btn-beam-arrow" style={{ width: '32px', height: '32px', fontSize: '0.85rem' }}>→</span>
         </a>
       </div>
     </nav>

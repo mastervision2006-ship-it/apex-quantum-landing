@@ -56,12 +56,12 @@ export default function ExclusivitySection() {
             ))}
           </motion.div>
 
-          <motion.a href="#form" className="btn-pill"
+          <motion.a href="#form" className="btn-beam"
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Quero fazer parte desse grupo
-            <span className="arrow" style={{ backgroundColor: '#0D0D0B' }}>→</span>
+            <span className="btn-beam-text">Quero fazer parte desse grupo</span>
+            <span className="btn-beam-arrow">→</span>
           </motion.a>
         </div>
       </div>

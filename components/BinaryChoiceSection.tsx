@@ -43,9 +43,9 @@ export default function BinaryChoiceSection() {
                 </li>
               ))}
             </ul>
-            <a href="#form" className="btn-pill">
-              Quero entrar agora
-              <span className="arrow">→</span>
+            <a href="#form" className="btn-beam">
+              <span className="btn-beam-text">Quero entrar agora</span>
+              <span className="btn-beam-arrow">→</span>
             </a>
           </motion.div>
 

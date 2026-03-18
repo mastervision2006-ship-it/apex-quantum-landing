@@ -108,9 +108,9 @@ export default function PromiseSection() {
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }}
         >
-          <a href="#form" className="btn-pill">
-            Quero multiplicar meu patrimônio
-            <span className="arrow">→</span>
+          <a href="#form" className="btn-beam">
+            <span className="btn-beam-text">Quero multiplicar meu patrimônio</span>
+            <span className="btn-beam-arrow">→</span>
           </a>
         </motion.div>
       </div>
