@@ -39,6 +39,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Erro ao salvar lead.' }, { status: 500 })
     }
 
+    // Dispara webhook n8n em background (não bloqueia resposta ao lead)
+    const n8nWebhook = process.env.N8N_NOVO_LEAD_WEBHOOK
+    if (n8nWebhook) {
+      fetch(n8nWebhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, email, whatsapp, patrimonio, source: source || 'apex-quantum-v2' }),
+      }).catch(e => console.error('[leads] n8n webhook error:', e))
+    }
+
     return NextResponse.json({ success: true }, { status: 201 })
   } catch (err) {
     console.error('[leads] Unexpected error:', err)
