@@ -187,15 +187,11 @@ export default function LeadFormSection() {
               {/* Submit */}
               <button type="submit" disabled={status === 'loading'}
                 className="btn-beam w-full disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{ padding: '5px' }}
               >
-                {/* Espaço espelho do círculo para centralizar o texto */}
-                <span style={{ width: '42px', flexShrink: 0 }} />
                 <span className="btn-beam-text flex-1 text-center text-sm">
                   {status === 'loading' ? 'Validando...' : 'Habilitar minha conta Apex Quantum'}
                 </span>
                 {status !== 'loading' && <span className="btn-beam-arrow">→</span>}
-                {status === 'loading' && <span style={{ width: '42px', flexShrink: 0 }} />}
               </button>
 
               {/* Security */}
