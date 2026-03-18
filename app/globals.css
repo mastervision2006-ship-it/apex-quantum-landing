@@ -177,6 +177,7 @@ body {
   align-items: center;
   gap: 0;
   border-radius: 999px;
+  overflow: hidden;
   /* padding-right = metade da largura do círculo para o círculo "encaixar" na borda */
   padding: 5px 5px 5px 1.6rem;
   background: rgba(196,154,56,0.08);
@@ -192,7 +193,7 @@ body {
 .btn-beam::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: 999px;
   padding: 2px;
   background: conic-gradient(
