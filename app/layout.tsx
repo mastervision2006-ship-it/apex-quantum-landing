@@ -34,10 +34,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${dmSans.variable}`}>
       <head>
-        {/* UTMify Pixel */}
+        {/* UTMify Pixel de conversão */}
+        <Script
+          src="https://cdn.utmify.com.br/scripts/pixel/pixel.js"
+          strategy="afterInteractive"
+          async
+        />
+        {/* UTMify UTM capture */}
         <Script
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-          data-utmify-prevent-xcod=""
+          data-utmify-prevent-xcod-sck=""
+          data-utmify-prevent-subids=""
           strategy="afterInteractive"
           async
         />
