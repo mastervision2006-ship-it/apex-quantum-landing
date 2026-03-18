@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ─── Dark Navy Palette ─── */
+  --bg-base:     #070E1A;   /* body background */
+  --bg-card:     #0C1B2E;   /* cards / raised surfaces */
+  --bg-section:  #0A1626;   /* alternate section bg */
+  --bg-raised:   #0F2038;   /* most elevated */
+  --bg-input:    #0A1828;   /* form inputs */
+
+  --text-base:   #EDF0F5;   /* primary text */
+  --text-soft:   #8B9EAF;   /* secondary text */
+  --text-dim:    #4A5E70;   /* muted text */
+
+  --gold:        #C49A38;   /* primary gold (brighter for dark bg) */
+  --gold-bright: #E0B84A;   /* highlight gold */
+  --gold-dim:    #7A5E20;   /* dimmed gold */
+  --gold-glow:   rgba(196,154,56,0.15); /* glow effect */
+
+  --border:      rgba(255,255,255,0.07);
+  --border-soft: rgba(255,255,255,0.04);
+  --border-gold: rgba(196,154,56,0.25);
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-base);
+}
+
+/* ─── Typography ─── */
+.heading-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.heading-xl { font-size: clamp(2.8rem, 7vw, 5.5rem); }
+.heading-lg { font-size: clamp(2rem, 5vw, 3.75rem); }
+.heading-md { font-size: clamp(1.6rem, 3.5vw, 2.5rem); }
+.heading-sm { font-size: clamp(1.3rem, 2.5vw, 1.875rem); }
+
+.eyebrow {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Pill Button ─── */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: #FFFFFF;
+  color: #07111E;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.75rem 1.4rem 0.75rem 1.7rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.btn-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); }
+.btn-pill:active { transform: translateY(0); }
+
+.btn-pill .arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  background-color: #07111E;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.btn-pill:hover .arrow { transform: translateX(3px); }
+
+/* Gold pill */
+.btn-pill-gold {
+  background: linear-gradient(135deg, #C49A38, #E0B84A);
+  color: #07111E;
+  box-shadow: 0 2px 20px rgba(196,154,56,0.35);
+}
+.btn-pill-gold:hover { box-shadow: 0 8px 32px rgba(196,154,56,0.45); }
+.btn-pill-gold .arrow { background-color: rgba(7,17,30,0.25); color: #fff; }
+
+/* ─── Layout ─── */
+.section-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.section-pad { padding-top: 7rem; padding-bottom: 7rem; }
+
+/* ─── Form ─── */
+.form-field { display: flex; flex-direction: column; gap: 0.45rem; }
+
+.form-label {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.form-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.95rem 1.1rem;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-base);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  appearance: none;
+}
+.form-input::placeholder { color: var(--text-dim); }
+.form-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-glow);
+}
+
+/* ─── Card ─── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+
+/* ─── Gold rule ─── */
+.gold-rule { width: 3rem; height: 2px; background-color: var(--gold); }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
