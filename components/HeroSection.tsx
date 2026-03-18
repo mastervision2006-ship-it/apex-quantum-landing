@@ -49,9 +49,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
         >
-          <a href="#form" className="btn-beam">
-            <span className="btn-beam-text">Quero conhecer a Apex Quantum</span>
-            <span className="btn-beam-arrow">→</span>
+          <a href="#form" className="btn-pill">
+            Quero conhecer a Apex Quantum
+            <span className="arrow">→</span>
           </a>
           <p className="font-sans text-sm flex items-center gap-2" style={{ color: 'var(--text-dim)' }}>
             <span className="w-4 h-[1px] inline-block" style={{ background: 'var(--text-dim)' }} />
