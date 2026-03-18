@@ -7,25 +7,32 @@ export async function POST(req: NextRequest) {
 
     const { nome, email, patrimonio, whatsapp, source, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = body
 
-    if (!nome || !email || !patrimonio || !whatsapp) {
+    if (!nome || !email || !whatsapp) {
       return NextResponse.json({ error: 'Campos obrigatórios ausentes.' }, { status: 400 })
     }
 
-    const { error } = await supabase.from('leads').insert([
-      {
-        nome,
-        email,
-        patrimonio,
-        whatsapp,
-        source: source || 'apex-quantum-v2',
-        utm_source: utm_source || null,
-        utm_medium: utm_medium || null,
-        utm_campaign: utm_campaign || null,
-        utm_content: utm_content || null,
-        utm_term: utm_term || null,
-        created_at: new Date().toISOString(),
-      },
-    ])
+    // dataCad no mesmo formato do CRM: "DD/MM/YYYY HH:MM"
+    const now = new Date()
+    const dataCad = now.toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', hour12: false,
+      timeZone: 'America/Sao_Paulo',
+    }).replace(',', '')
+
+    const { error } = await supabase.from('leads').insert([{
+      nome,
+      email,
+      tel: whatsapp,          // mapeia whatsapp → tel (campo do CRM)
+      fase: 'Novo Lead',      // entra direto no Kanban
+      dataCad,                // formato padrão do CRM
+      patrimonio,             // coluna extra (precisa existir no Supabase)
+      source: source || 'apex-quantum-v2',  // identifica a landing no CRM
+      utm_source:   utm_source   || null,
+      utm_medium:   utm_medium   || null,
+      utm_campaign: utm_campaign || null,
+      utm_content:  utm_content  || null,
+      utm_term:     utm_term     || null,
+    }])
 
     if (error) {
       console.error('[leads] Supabase error:', error)
