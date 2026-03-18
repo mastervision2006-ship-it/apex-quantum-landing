@@ -186,10 +186,12 @@ export default function LeadFormSection() {
 
               {/* Submit */}
               <button type="submit" disabled={status === 'loading'}
-                className="btn-pill w-full justify-center text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                className="btn-beam w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === 'loading' ? 'Validando...' : 'Habilitar minha conta Apex Quantum'}
-                {status !== 'loading' && <span className="arrow">→</span>}
+                <span className="btn-beam-text flex-1 text-center text-sm">
+                  {status === 'loading' ? 'Validando...' : 'Habilitar minha conta Apex Quantum'}
+                </span>
+                {status !== 'loading' && <span className="btn-beam-arrow">→</span>}
               </button>
 
               {/* Security */}
