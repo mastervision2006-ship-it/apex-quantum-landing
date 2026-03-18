@@ -189,7 +189,7 @@ export default function LeadFormSection() {
                 className="btn-beam w-full disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <span className="btn-beam-text flex-1 text-center text-sm">
-                  {status === 'loading' ? 'Validando...' : 'Habilitar minha conta Apex Quantum'}
+                  {status === 'loading' ? 'Validando...' : 'Habilitar minha conta'}
                 </span>
                 {status !== 'loading' && <span className="btn-beam-arrow">→</span>}
               </button>
