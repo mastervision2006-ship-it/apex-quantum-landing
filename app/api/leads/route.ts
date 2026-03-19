@@ -39,10 +39,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Erro ao salvar lead.' }, { status: 500 })
     }
 
-    // Dispara webhook n8n em background (não bloqueia resposta ao lead)
+    // Dispara webhook n8n (aguarda para garantir envio antes do Vercel encerrar a função)
     const n8nWebhook = process.env.N8N_NOVO_LEAD_WEBHOOK
     if (n8nWebhook) {
-      fetch(n8nWebhook, {
+      await fetch(n8nWebhook, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, email, whatsapp, patrimonio, source: source || 'apex-quantum-v2' }),
