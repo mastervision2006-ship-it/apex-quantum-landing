@@ -52,6 +52,22 @@ export default function LeadFormSection() {
         body: JSON.stringify({ ...form, source: 'apex-quantum-v2' }),
       })
       if (!res.ok) throw new Error()
+      // Meta Pixel — Lead event
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead')
+      }
+      // Dispara conversão UTMify (aguarda script carregar se necessário)
+      if (typeof window !== 'undefined') {
+        const fire = () => { (window as any).utmify?.('conversion', 'lead') }
+        if ((window as any).utmify) {
+          fire()
+        } else {
+          let fired = false
+          const once = () => { if (!fired) { fired = true; fire() } }
+          window.addEventListener('utmify:ready', once, { once: true })
+          setTimeout(once, 3000)
+        }
+      }
       setStatus('success')
     } catch {
       setStatus('error'); setErrorMsg('Ocorreu um erro. Tente novamente.')
