@@ -20,7 +20,11 @@ function maskPhone(v: string) {
   return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`
 }
 
-export default function LeadFormSection() {
+interface LeadFormSectionProps {
+  source?: string
+}
+
+export default function LeadFormSection({ source = 'apex-quantum-v2' }: LeadFormSectionProps) {
   const [form, setForm] = useState<FormData>(initialForm)
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -49,7 +53,7 @@ export default function LeadFormSection() {
     try {
       const res = await fetch('/api/leads', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'apex-quantum-v2' }),
+        body: JSON.stringify({ ...form, source }),
       })
       if (!res.ok) throw new Error()
       // Meta Pixel — Lead event

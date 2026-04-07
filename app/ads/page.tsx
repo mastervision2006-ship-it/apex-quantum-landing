@@ -10,7 +10,10 @@ import BinaryChoiceSection from '@/components/BinaryChoiceSection'
 import LeadFormSection from '@/components/LeadFormSection'
 import Footer from '@/components/Footer'
 
-export default function Home() {
+// Página duplicada para campanha privada de Meta Ads.
+// Leads capturados aqui são identificados com source='apex-ads-privado'
+// e ficam visíveis APENAS para o admin no CRM.
+export default function AdsPage() {
   return (
     <>
       <Navigation />
@@ -23,7 +26,7 @@ export default function Home() {
         <PerformanceChartSection />
         <TechnologySection />
         <BinaryChoiceSection />
-        <LeadFormSection source="apex-quantum-v2" />
+        <LeadFormSection source="apex-ads-privado" />
       </main>
       <Footer />
     </>
