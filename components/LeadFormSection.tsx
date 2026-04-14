@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { patrimonyOptions } from '@/data/chartData'
 
@@ -27,6 +28,7 @@ interface LeadFormSectionProps {
 }
 
 export default function LeadFormSection({ source = 'apex-quantum-v2' }: LeadFormSectionProps) {
+  const router = useRouter()
   const [form, setForm] = useState<FormData>(initialForm)
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -52,51 +54,31 @@ export default function LeadFormSection({ source = 'apex-quantum-v2' }: LeadForm
     e.preventDefault()
     if (!form.consentimento) { setErrorMsg('Aceite os termos para continuar.'); return }
     setStatus('loading'); setErrorMsg('')
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source }),
-      })
-      if (!res.ok) throw new Error()
+
+    // Dispara o POST em background — não bloqueia o redirect
+    fetch('/api/leads', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form, source }),
+    }).then(() => {
       // Meta Pixel — Lead event
       if (typeof window !== 'undefined' && (window as any).fbq) {
         (window as any).fbq('track', 'Lead')
       }
-      // Dispara conversão UTMify (aguarda script carregar se necessário)
+      // UTMify conversion
       if (typeof window !== 'undefined') {
         const fire = () => { (window as any).utmify?.('conversion', 'lead') }
-        if ((window as any).utmify) {
-          fire()
-        } else {
+        if ((window as any).utmify) { fire() }
+        else {
           let fired = false
           const once = () => { if (!fired) { fired = true; fire() } }
           window.addEventListener('utmify:ready', once, { once: true })
           setTimeout(once, 3000)
         }
       }
-      setStatus('success')
-    } catch {
-      setStatus('error'); setErrorMsg('Ocorreu um erro. Tente novamente.')
-    }
-  }
+    }).catch(() => {/* falha silenciosa — lead não salvo, mas fluxo continua */})
 
-  if (status === 'success') {
-    return (
-      <section id="form" className="section-pad" style={{ background: 'var(--bg-section)' }}>
-        <div className="section-container max-w-xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
-            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6"
-              style={{ background: 'linear-gradient(135deg, var(--gold), var(--gold-bright))' }}>
-              <span className="text-white text-xl">✓</span>
-            </div>
-            <h2 className="heading-display heading-md mb-4" style={{ color: 'var(--text-base)' }}>Solicitação recebida.</h2>
-            <p className="font-sans text-base leading-relaxed" style={{ color: 'var(--text-soft)' }}>
-              Nossa equipe entrará em contato em breve via WhatsApp para validar sua elegibilidade.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-    )
+    // Redireciona imediatamente, independente do resultado do Supabase
+    router.push('/ao-vivo')
   }
 
   return (
